@@ -1,18 +1,27 @@
 import React from "react";
 
-const Search = () => {
-  
+const Search = (props) => {
+  var [searchItem, setSearchItem] = React.useState('');
   const handleChange = event => {
-    console.log(event.target.value);
+    setSearchItem(event.target.value);
+    props.onSearch(event);
   }
   return (<div>
     <label htmlFor='search'>Search :</label>
-    <input id='search' type='text' handleChange={handleChange} />
+    <input id='search' type='text' onChange={handleChange} />
+    <p>
+      Searching for <strong>{searchItem}</strong>
+    </p>
   </div>
   );
 }
 
 const App = () => {
+
+  const handleSearch = event => {
+    console.log(event.target.value);
+  }
+
   const stories = [
     {
       title : 'React',
@@ -35,7 +44,7 @@ const App = () => {
   return (
     <div>
       <h1>My Hacker Stories</h1>
-      <Search />
+      <Search onSearch={handleSearch}/>
       <hr />
       <List list={stories}/>
     </div>
