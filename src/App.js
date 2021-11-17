@@ -1,16 +1,14 @@
 import React from "react";
 
 const Search = (props) => {
-  var [searchItem, setSearchItem] = React.useState('');
   const handleChange = event => {
-    setSearchItem(event.target.value);
     props.onSearch(event);
   }
   return (<div>
     <label htmlFor='search'>Search :</label>
     <input id='search' type='text' onChange={handleChange} />
     <p>
-      Searching for <strong>{searchItem}</strong>
+      Searching for <strong>{props.searchTerm}</strong>
     </p>
   </div>
   );
@@ -18,8 +16,9 @@ const Search = (props) => {
 
 const App = () => {
 
+  var [searchTerm, setSearchTerm] = React.useState('R');
   const handleSearch = event => {
-    console.log(event.target.value);
+    setSearchTerm(event.target.value);
   }
 
   const stories = [
@@ -40,13 +39,14 @@ const App = () => {
       objectID : 1,
     }
   ]
+  const searchStories = stories.filter((story) => story.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div>
       <h1>My Hacker Stories</h1>
-      <Search onSearch={handleSearch}/>
+      <Search onSearch={handleSearch} searchTerm={searchTerm}/>
       <hr />
-      <List list={stories}/>
+      <List list={searchStories}/>
     </div>
   );
 }
