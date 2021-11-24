@@ -1,14 +1,15 @@
 import React from "react";
 
-const Search = (props) => {
+const Search = ({searchTerm, onSearch}) => {
+  console.log('render');
   const handleChange = event => {
-    props.onSearch(event);
+    onSearch(event);
   }
   return (<div>
     <label htmlFor='search'>Search :</label>
-    <input id='search' type='text' onChange={handleChange} value={props.searchTerm}/>
+    <input id='search' type='text' onChange={handleChange} value={searchTerm}/>
     <p>
-      Searching for <strong>{props.searchTerm}</strong>
+      Searching for <strong>{searchTerm}</strong>
     </p>
   </div>
   );
@@ -51,8 +52,10 @@ const App = () => {
   );
 }
 
-const List = (props) => props.list.map(item => (
-  <div key={item.objectID}>
+const List = ({list}) => list.map(item => (<Item key={item.objectID} item={item}/>));
+
+const Item = ({ item }) => (
+  <div>
     <span>
       <a href={item.url}>{item.title}</a>
     </span>
@@ -60,7 +63,7 @@ const List = (props) => props.list.map(item => (
     <span>{item.num_comments}</span>
     <span>{item.points}</span>
   </div>
-));
+);
 
 
 export default App;
