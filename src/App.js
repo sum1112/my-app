@@ -4,7 +4,6 @@ const Search = ({searchTerm, onSearch}) => {
   console.log('render');
   const handleChange = event => {
     onSearch(event);
-    localStorage.setItem('search', event.target.value);
   }
   return (<div>
     <label htmlFor='search'>Search :</label>
@@ -24,6 +23,10 @@ const App = () => {
   const handleSearch = event => {
     setSearchTerm(event.target.value);
   }
+
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm)
+  }, [searchTerm]);
 
   const stories = [
     {
